@@ -1,69 +1,72 @@
-#include <iostream>
-#include <cstring>
-#include <vector>
+using System;
+using System.Collections.Generic;
 
-using namespace std;
-
+class Program
+{
 struct edge
 {
-int x, y;
-};
+public int x, y;
+}
+static int[,] a = new int[55, 55];
+static int[] du = new int[55];
+static List<edge> my = new List<edge>();
 
-int a[55][55], du[55];
-
-vector<edge> my;
-
-void jie(int u)
+static void jie(int u)
 {
 edge t;
 for (int v = 1; v <= 50; v++)
 {
-if (a[u][v])
+if (a[u, v] != 0)
 {
-a[u][v]--; a[v][u]--;
-t.x = u; t.y = v;
-my.push_back(t);
+a[u, v]--;
+a[v, u]--;
+t.x = u;
+t.y = v;
+my.Add(t);
 jie(v);
 }
 }
 }
 
-int main()
+static void Main()
 {
-int t, i, j, n, k = 1, u, v;
-cin » t;
-
-while (t--)
+int t, i, n, k = 1, v;
+t = int.Parse(Console.ReadLine());
+int u = 0;
+while (t— > 0)
 {
-cin » n;
-memset(a, 0, sizeof(a));
-memset(du, 0, sizeof(du));
+n = int.Parse(Console.ReadLine());
+Array.Clear(a, 0, a.Length);
+Array.Clear(du, 0, du.Length);
 
 for (i = 1; i <= n; i++)
 {
-cin » u » v;
-a[u][v]++;
-a[v][u]++;
+string[] line = Console.ReadLine().Split();
+u = int.Parse(line[0]);
+v = int.Parse(line[1]);
+a[u, v]++;
+a[v, u]++;
 du[u]++;
 du[v]++;
 }
 
 int flag = 1;
 
+
 for (i = 1; i <= 50; i++)
 {
-if (du[i] % 2)
+if (du[i] % 2 != 0)
 {
 flag = 0;
-}
 break;
 }
+}
 
-if (flag)
+if (flag != 0)
 {
-my.clear();
+my.Clear();
 jie(u);
-if (my.size() != n || my[0].x != my[n - 1].y)
+if (my.Count != n || my[0].x != my[n - 1].y)
 {
 flag = 0;
 }
@@ -71,23 +74,23 @@ flag = 0;
 
 if (k != 1)
 {
-cout « endl;
+Console.WriteLine();
 }
 
-cout « "Case #" « k « endl;
+Console.WriteLine($"Case #{k}");
 k++;
 
-if (!flag)
+if (flag == 0)
 {
-cout « "IMPOSSIBLEEE" « endl;
+Console.WriteLine("IMPOSSIBLEEE");
 }
 else
 {
-for (i = 0; i < my.size(); i++)
+for (i = 0; i < my.Count; i++)
 {
-cout « my[i].x « " " « my[i].y « endl;
+Console.WriteLine($"{my[i].x} {my[i].y}");
 }
 }
 }
-return 0;
+}
 }
